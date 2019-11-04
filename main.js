@@ -66,6 +66,7 @@ window.onload = function init() {
     language.innerHTML = 'Eng';
     document.querySelector("body > div.language > select").appendChild(language);
     changeLang();
+    keyboardInput();
 }
 
 document.addEventListener('keydown', function(event){
@@ -83,8 +84,6 @@ document.addEventListener('keydown', function(event){
     for(let i = 0; i < key.length; i++) {
         if (key[i].getAttribute('data-keyCode') == event.code) key[i].classList.add('key__keydown');
     }
-    let textArea = document.getElementsByClassName('input');
-    textArea[0].value += event.key;
 });
 
 document.addEventListener('keyup', function(event){
@@ -101,7 +100,7 @@ document.addEventListener('keyup', function(event){
 });
 
 function changeLang() {
-    let select = document.querySelector("body > div.language > select");
+    let select = document.querySelector('body > div.language > select');
     select.addEventListener('change', function() {
         if (this.value == 'Rus') {
             for (let i = 0; i < russianKeyboard.length; i++) {
@@ -117,4 +116,21 @@ function changeLang() {
         }
         localStorage.setItem('lang', this.value);
     })
+}
+
+function keyboardInput() {
+    let select = document.getElementsByClassName('key');
+    let textArea = document.getElementsByClassName('input');
+    for (let i = 0; i < select.length; i++) {
+        select[i].addEventListener('click', function() {
+            if (select[i].textContent == 'Backspace') textArea[0].value;
+            else if (select[i].textContent == 'Space') textArea[0].value += ' '
+            else if (select[i].textContent == 'Caps Lock') {
+                for(let i = 0; i < select.length; i++) {
+                    select[i].classList.toggle('key__uppercase');
+                }
+            }
+            else textArea[0].value += select[i].textContent; 
+        })
+    }
 }
