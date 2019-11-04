@@ -1,0 +1,87 @@
+@mixin flex () {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    background: black;
+    border: 1px solid gray;
+}
+
+@mixin animation () {
+    &:hover {
+        background: gray;
+        transition: all .5s;
+    }
+
+    &:active {
+        background: #00BFFF;
+        transition: all .1s;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 800px;
+    height: 300px;
+    margin-bottom: 50px;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    padding: 10px;
+
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.keyboard__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 40px;
+    margin-bottom: 8px;
+}
+
+.key, .keyboard__backspace, .keyboard__tab, .keyboard__caps-lock, .keyboard__enter, .keyboard__shift, .keyboard__space {
+    @include flex;
+    @include animation;
+}
+
+.key {
+    width: 40px;
+
+    color: white;
+}
+
+.keyboard__backspace {
+    width: 100px;
+}
+
+.keyboard__tab {
+    width: 50px;
+}
+
+.keyboard__caps-lock {
+    width: 100px;
+}
+
+.keyboard__enter {
+    width: 86px;
+}
+
+.keyboard__shift {
+    width: 100px;
+}
+
+.keyboard__space {
+    width: 330px;
+}
