@@ -85,3 +85,12 @@ body {
 .keyboard__space {
     width: 330px;
 }
+
+.key__keydown {
+    background: #00BFFF;
+    transition: all .2s;
+}
+
+.key__uppercase {
+    text-transform: uppercase;
+}

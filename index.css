@@ -73,4 +73,13 @@ body {
   width: 330px;
 }
 
+.key__keydown {
+  background: #00BFFF;
+  transition: all 0.2s;
+}
+
+.key__uppercase {
+  text-transform: uppercase;
+}
+
 /*# sourceMappingURL=index.css.map */
