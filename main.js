@@ -16,8 +16,11 @@ const keyCode = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 
 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ShiftRight',
 'ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'OSRight', 'ContextMenu', 'ControlRight'];
 
+const languageValue = ['Rus', 'Eng'];
+
 window.onload = function init() {
-    let textArea = document.createElement('textarea');
+    const rows = [];
+    const textArea = document.createElement('textarea');
     textArea.className = 'input';
     textArea.setAttribute('rows', '6');
     textArea.setAttribute('cols', '60');
@@ -32,39 +35,44 @@ window.onload = function init() {
     for (let i = 0; i < 5; i++) {
         let row = document.createElement('div');
         row.className = 'keyboard__row';
-        document.querySelector("body > div").appendChild(row);
+        rows.push(row);
     }
 
     for (let i = 0; i < russianKeyboard.length; i++) {
         let key = document.createElement('div');
         key.setAttribute('data-keyCode', keyCode[i]);
-        key.innerHTML = russianKeyboard[i];
-        if (russianKeyboard[i] == 'Backspace') key.className = 'keyboard__backspace'
-        else if (russianKeyboard[i] == 'Tab') key.className = 'keyboard__tab'
-        else if (russianKeyboard[i] == 'Caps Lock') key.className = 'keyboard__caps-lock'
-        else if (russianKeyboard[i] == 'Enter') key.className = 'keyboard__enter'
-        else if (russianKeyboard[i] == 'Shift') key.className = 'keyboard__shift'
-        else if (russianKeyboard[i] == 'Space') key.className = 'keyboard__space'
+        if (localStorage.getItem('lang') == 'Eng') key.textContent = englishKeyboard[i]
+        else key.textContent = russianKeyboard[i]
+        if (key.textContent == 'Backspace') key.className = 'keyboard__backspace'
+        else if (key.textContent == 'Tab') key.className = 'keyboard__tab'
+        else if (key.textContent == 'Caps Lock') key.className = 'keyboard__caps-lock'
+        else if (key.textContent == 'Enter') key.className = 'keyboard__enter'
+        else if (key.textContent == 'Shift') key.className = 'keyboard__shift'
+        else if (key.textContent == 'Space') key.className = 'keyboard__space'
         key.classList.add('key');
-        if (i < 14) document.querySelector("body > div > div:nth-child(1)").appendChild(key);
-        else if (i < 28) document.querySelector("body > div > div:nth-child(2)").appendChild(key);
-        else if (i < 41) document.querySelector("body > div > div:nth-child(3)").appendChild(key);
-        else if (i < 53) document.querySelector("body > div > div:nth-child(4)").appendChild(key);
-        else document.querySelector("body > div > div:nth-child(5)").appendChild(key);
+        if (i < 14) rows[0].appendChild(key);
+        else if (i < 28) rows[1].appendChild(key);
+        else if (i < 41) rows[2].appendChild(key);
+        else if (i < 53) rows[3].appendChild(key);
+        else rows[4].appendChild(key);
+    }
+
+    for (let i = 0; i < rows.length; i++) {
+        document.querySelector("body > div").appendChild(rows[i]);
     }
 
     let language = document.createElement('div');
+    let select = document.createElement('select');
     language.className = 'language';
-    language.innerHTML = 'Change language: ';
+    language.textContent = 'Change language: ';
+    language.appendChild(select);
+    for (let i = 0; i < languageValue.length; i++) {
+        let option = document.createElement('option');
+        option.textContent = languageValue[i]
+        select.appendChild(option);
+    }
     document.body.appendChild(language);
-    language = document.createElement('select');
-    document.querySelector("body > div.language").appendChild(language);
-    language = document.createElement('option');
-    language.innerHTML = 'Rus';
-    document.querySelector("body > div.language > select").appendChild(language);
-    language = document.createElement('option');
-    language.innerHTML = 'Eng';
-    document.querySelector("body > div.language > select").appendChild(language);
+    if (localStorage.getItem('lang') == 'Eng')  select.selectedIndex = 1;
     changeLang();
     keyboardInput();
 }
@@ -105,13 +113,13 @@ function changeLang() {
         if (this.value == 'Rus') {
             for (let i = 0; i < russianKeyboard.length; i++) {
                 let key = document.getElementsByClassName('key');
-                key[i].innerHTML = russianKeyboard[i];
+                key[i].textContent = russianKeyboard[i];
             }
         }
         else if (this.value == 'Eng') {
             for (let i = 0; i < englishKeyboard.length; i++) {
                 let key = document.getElementsByClassName('key');
-                key[i].innerHTML = englishKeyboard[i];
+                key[i].textContent = englishKeyboard[i];
             }
         }
         localStorage.setItem('lang', this.value);
@@ -119,8 +127,8 @@ function changeLang() {
 }
 
 function keyboardInput() {
-    let select = document.getElementsByClassName('key');
-    let textArea = document.getElementsByClassName('input');
+    const select = document.getElementsByClassName('key');
+    const textArea = document.getElementsByClassName('input');
     for (let i = 0; i < select.length; i++) {
         select[i].addEventListener('click', function() {
             if (select[i].textContent == 'Backspace') textArea[0].value;
