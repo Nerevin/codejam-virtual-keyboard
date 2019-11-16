@@ -17,6 +17,8 @@ const keyCode = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 
 'ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'OSRight', 'ContextMenu', 'ControlRight'];
 
 const languageValue = ['Rus', 'Eng'];
+let shiftKey = false;
+let altKey = false;
 
 window.onload = function init() {
     const rows = [];
@@ -72,9 +74,13 @@ window.onload = function init() {
         select.appendChild(option);
     }
     document.body.appendChild(language);
+    let langText = document.createElement('div');
+    langText.textContent = 'To change language press left Shift and left Alt';
+    document.body.appendChild(langText);
     if (localStorage.getItem('lang') == 'Eng')  select.selectedIndex = 1;
     changeLang();
     keyboardInput();
+    changeLangKey();
 }
 
 document.addEventListener('keydown', function(event){
@@ -95,6 +101,8 @@ document.addEventListener('keydown', function(event){
 });
 
 document.addEventListener('keyup', function(event){
+    shiftKey = false;
+    altKey = false;
     event.preventDefault();
     let key = document.getElementsByClassName('key');
     if (event.code == 'ShiftLeft' || event.code == 'ShiftRight')  {
@@ -126,19 +134,39 @@ function changeLang() {
     })
 }
 
-function keyboardInput() {
-    const select = document.getElementsByClassName('key');
-    const textArea = document.getElementsByClassName('input');
-    for (let i = 0; i < select.length; i++) {
-        select[i].addEventListener('click', function() {
-            if (select[i].textContent == 'Backspace') textArea[0].value;
-            else if (select[i].textContent == 'Space') textArea[0].value += ' '
-            else if (select[i].textContent == 'Caps Lock') {
-                for(let i = 0; i < select.length; i++) {
-                    select[i].classList.toggle('key__uppercase');
-                }
+function changeLangKey() {
+    document.addEventListener('keydown', function(event) {
+        let select = document.querySelector('body > div.language > select');
+        if (event.code == 'ShiftLeft') shiftKey = true;
+        else if (event.code == 'AltLeft') altKey = true;
+        if (shiftKey && altKey){ if (select.value == 'Rus') {
+            select.value = 'Eng';
+            for (let i = 0; i < englishKeyboard.length; i++) {
+                let key = document.getElementsByClassName('key');
+                key[i].textContent = englishKeyboard[i];
             }
-            else textArea[0].value += select[i].textContent; 
-        })
+        }
+        else {
+            select.value = 'Rus';
+            for (let i = 0; i < russianKeyboard.length; i++) {
+                let key = document.getElementsByClassName('key');
+                key[i].textContent = russianKeyboard[i];
+            }
+        }
+        localStorage.setItem('lang', select.value);
     }
+    })
+}
+
+function keyboardInput() {
+    const select = document.getElementsByClassName('keyboard');
+    const textArea = document.getElementsByClassName('input');
+    select[0].addEventListener('click', function() {
+        let target = event.target;
+        if (target.textContent == 'Backspace') textArea[0].value
+        else if (target.textContent == 'Space') textArea[0].value += ' '
+        else if (target.textContent == 'Caps Lock') select[0].classList.toggle('key__uppercase')
+        else if (target.className !== 'key') return
+        else textArea[0].value += target.textContent; 
+    })
 }
