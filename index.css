@@ -1,0 +1,79 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  width: 800px;
+  height: 300px;
+  margin-bottom: 50px;
+}
+
+.key {
+  width: 40px;
+  color: white;
+}
+
+.key__keydown {
+  background: #00BFFF;
+  transition: all 0.2s;
+}
+
+.key__uppercase {
+  text-transform: uppercase;
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+.keyboard__backspace {
+  width: 100px;
+}
+.keyboard__tab {
+  width: 50px;
+}
+.keyboard__caps-lock {
+  width: 100px;
+}
+.keyboard__enter {
+  width: 86px;
+}
+.keyboard__shift {
+  width: 100px;
+}
+.keyboard__space {
+  width: 330px;
+}
+
+.keyboard__row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.key, .keyboard__backspace, .keyboard__tab, .keyboard__caps-lock, .keyboard__enter, .keyboard__shift, .keyboard__space {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: black;
+  border: 1px solid gray;
+}
+.key:hover, .keyboard__backspace:hover, .keyboard__tab:hover, .keyboard__caps-lock:hover, .keyboard__enter:hover, .keyboard__shift:hover, .keyboard__space:hover {
+  background: gray;
+  transition: all 0.5s;
+}
+.key:active, .keyboard__backspace:active, .keyboard__tab:active, .keyboard__caps-lock:active, .keyboard__enter:active, .keyboard__shift:active, .keyboard__space:active {
+  background: #00BFFF;
+  transition: all 0.1s;
+}
+
+/*# sourceMappingURL=index.css.map */
