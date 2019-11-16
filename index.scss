@@ -33,6 +33,21 @@ body {
     margin-bottom: 50px;
 }
 
+.key {
+    width: 40px;
+
+    color: white;
+}
+
+.key__keydown {
+    background: #00BFFF;
+    transition: all .2s;
+}
+
+.key__uppercase {
+    text-transform: uppercase;
+}
+
 .keyboard {
     display: flex;
     flex-direction: column;
@@ -41,6 +56,30 @@ body {
 
     border: 2px solid black;
     border-radius: 5px;
+
+    &__backspace {
+        width: 100px;
+    }
+
+    &__tab {
+        width: 50px;
+    }
+
+    &__caps-lock {
+        width: 100px;
+    }
+
+    &__enter {
+        width: 86px;
+    }
+
+    &__shift {
+        width: 100px;
+    }
+    
+    &__space {
+        width: 330px;
+    }
 }
 
 .keyboard__row {
@@ -54,43 +93,4 @@ body {
 .key, .keyboard__backspace, .keyboard__tab, .keyboard__caps-lock, .keyboard__enter, .keyboard__shift, .keyboard__space {
     @include flex;
     @include animation;
-}
-
-.key {
-    width: 40px;
-
-    color: white;
-}
-
-.keyboard__backspace {
-    width: 100px;
-}
-
-.keyboard__tab {
-    width: 50px;
-}
-
-.keyboard__caps-lock {
-    width: 100px;
-}
-
-.keyboard__enter {
-    width: 86px;
-}
-
-.keyboard__shift {
-    width: 100px;
-}
-
-.keyboard__space {
-    width: 330px;
-}
-
-.key__keydown {
-    background: #00BFFF;
-    transition: all .2s;
-}
-
-.key__uppercase {
-    text-transform: uppercase;
 }
